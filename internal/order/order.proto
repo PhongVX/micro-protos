@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package order;
+
+option go_package="internal/order";
+
+service Order {
+  rpc InsertOrder (InsertOrderRequest) returns (InsertOrderResponse) {}
+}
+
+message InsertOrderRequest {
+  string correlationID = 1;
+  string customerID=2;
+  double totalPrice=3;
+}
+
+message InsertOrderResponse {
+  int32 rowAffected = 1;
+  string id=2;
+}
