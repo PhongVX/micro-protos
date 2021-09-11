@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package order;
 
-option go_package="internal/order";
+option go_package="src/github.com/PhongVX/micro-protos";
 
 service Order {
   rpc InsertOrder (InsertOrderRequest) returns (InsertOrderResponse) {}
