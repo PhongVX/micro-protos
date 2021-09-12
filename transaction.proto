@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package transaction;
+
+option go_package="./transaction";
+
+service Transaction {
+  rpc BeginTx(CommonTxRequest) returns (BeginTxResponse) {}
+  rpc Commit(CommonTxRequest) returns (CommonTxResponse) {}
+  rpc Rollback(CommonTxRequest) returns (CommonTxResponse) {}
+}
+
+message CommonTxRequest {
+  string correlationID = 1;
+}
+
+message CommonTxResponse {
+  bool ok = 1;
+}
+
+message BeginTxResponse {
+  bool isRenew = 1;
+}
+
