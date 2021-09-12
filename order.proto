@@ -6,6 +6,7 @@ option go_package="./order";
 
 service Order {
   rpc InsertOrder (InsertOrderRequest) returns (InsertOrderResponse) {}
+  rpc InsertOrderDetail (InsertOrderDetailRequest) returns (InsertOrderDetailResponse) {}
 }
 
 message OrderDetail {
@@ -21,10 +22,19 @@ message InsertOrderRequest {
   double totalPrice = 3;
   string name = 4;
   string address = 5;
+}
+
+message InsertOrderDetailRequest {
+  string correlationID = 1;
   repeated OrderDetail orderDetails = 6;
 }
 
 message InsertOrderResponse {
+  int32 rowAffected = 1;
+  string id = 2;
+}
+
+message InsertOrderDetailResponse {
   int32 rowAffected = 1;
   string id = 2;
 }
