@@ -14,86 +14,86 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// OrderClient is the client API for Order service.
+// ProductClient is the client API for Product service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type OrderClient interface {
+type ProductClient interface {
 	UpdateProduct(ctx context.Context, in *UpdateProductRequest, opts ...grpc.CallOption) (*UpdateProductResponse, error)
 }
 
-type orderClient struct {
+type productClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewOrderClient(cc grpc.ClientConnInterface) OrderClient {
-	return &orderClient{cc}
+func NewProductClient(cc grpc.ClientConnInterface) ProductClient {
+	return &productClient{cc}
 }
 
-func (c *orderClient) UpdateProduct(ctx context.Context, in *UpdateProductRequest, opts ...grpc.CallOption) (*UpdateProductResponse, error) {
+func (c *productClient) UpdateProduct(ctx context.Context, in *UpdateProductRequest, opts ...grpc.CallOption) (*UpdateProductResponse, error) {
 	out := new(UpdateProductResponse)
-	err := c.cc.Invoke(ctx, "/product.Order/UpdateProduct", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/product.Product/UpdateProduct", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// OrderServer is the server API for Order service.
-// All implementations must embed UnimplementedOrderServer
+// ProductServer is the server API for Product service.
+// All implementations must embed UnimplementedProductServer
 // for forward compatibility
-type OrderServer interface {
+type ProductServer interface {
 	UpdateProduct(context.Context, *UpdateProductRequest) (*UpdateProductResponse, error)
-	mustEmbedUnimplementedOrderServer()
+	mustEmbedUnimplementedProductServer()
 }
 
-// UnimplementedOrderServer must be embedded to have forward compatible implementations.
-type UnimplementedOrderServer struct {
+// UnimplementedProductServer must be embedded to have forward compatible implementations.
+type UnimplementedProductServer struct {
 }
 
-func (UnimplementedOrderServer) UpdateProduct(context.Context, *UpdateProductRequest) (*UpdateProductResponse, error) {
+func (UnimplementedProductServer) UpdateProduct(context.Context, *UpdateProductRequest) (*UpdateProductResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateProduct not implemented")
 }
-func (UnimplementedOrderServer) mustEmbedUnimplementedOrderServer() {}
+func (UnimplementedProductServer) mustEmbedUnimplementedProductServer() {}
 
-// UnsafeOrderServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to OrderServer will
+// UnsafeProductServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to ProductServer will
 // result in compilation errors.
-type UnsafeOrderServer interface {
-	mustEmbedUnimplementedOrderServer()
+type UnsafeProductServer interface {
+	mustEmbedUnimplementedProductServer()
 }
 
-func RegisterOrderServer(s grpc.ServiceRegistrar, srv OrderServer) {
-	s.RegisterService(&Order_ServiceDesc, srv)
+func RegisterProductServer(s grpc.ServiceRegistrar, srv ProductServer) {
+	s.RegisterService(&Product_ServiceDesc, srv)
 }
 
-func _Order_UpdateProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Product_UpdateProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateProductRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(OrderServer).UpdateProduct(ctx, in)
+		return srv.(ProductServer).UpdateProduct(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/product.Order/UpdateProduct",
+		FullMethod: "/product.Product/UpdateProduct",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrderServer).UpdateProduct(ctx, req.(*UpdateProductRequest))
+		return srv.(ProductServer).UpdateProduct(ctx, req.(*UpdateProductRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Order_ServiceDesc is the grpc.ServiceDesc for Order service.
+// Product_ServiceDesc is the grpc.ServiceDesc for Product service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Order_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "product.Order",
-	HandlerType: (*OrderServer)(nil),
+var Product_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "product.Product",
+	HandlerType: (*ProductServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "UpdateProduct",
-			Handler:    _Order_UpdateProduct_Handler,
+			Handler:    _Product_UpdateProduct_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
