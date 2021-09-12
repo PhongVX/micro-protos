@@ -14,6 +14,7 @@ message OrderDetail {
     string quantity = 2;
     double price = 3;
     double totalPrice = 4;
+    string orderID = 5;
 }
 
 message InsertOrderRequest {
