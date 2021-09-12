@@ -5,20 +5,25 @@ package transaction;
 option go_package="./transaction";
 
 service Transaction {
-  rpc BeginTx(CommonTxRequest) returns (BeginTxResponse) {}
-  rpc Commit(CommonTxRequest) returns (CommonTxResponse) {}
-  rpc Rollback(CommonTxRequest) returns (CommonTxResponse) {}
-}
-
-message CommonTxRequest {
-  string correlationID = 1;
-}
-
-message CommonTxResponse {
-  bool ok = 1;
+  rpc BeginTx(BeginTxRequest) returns (BeginTxResponse) {}
+  rpc Commit(CommonTxDoActionRequest) returns (CommonTxResponse) {}
+  rpc Rollback(CommonTxDoActionRequest) returns (CommonTxResponse) {}
 }
 
 message BeginTxResponse {
   bool isRenew = 1;
+}
+
+message BeginTxRequest {
+  string correlationID = 1;
+}
+
+message CommonTxDoActionRequest {
+  string correlationID = 1;
+  BeginTxResponse beginTxRes = 2;
+}
+
+message CommonTxResponse {
+  bool ok = 1;
 }
 

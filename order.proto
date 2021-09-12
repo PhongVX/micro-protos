@@ -8,13 +8,23 @@ service Order {
   rpc InsertOrder (InsertOrderRequest) returns (InsertOrderResponse) {}
 }
 
+message OrderDetail {
+    string productID = 1;
+    string quantity = 2;
+    double price = 3;
+    double totalPrice = 4;
+}
+
 message InsertOrderRequest {
   string correlationID = 1;
-  string customerID=2;
-  double totalPrice=3;
+  string phoneNumber = 2;
+  double totalPrice = 3;
+  string name = 4;
+  string address = 5;
+  repeated OrderDetail orderDetails = 6;
 }
 
 message InsertOrderResponse {
   int32 rowAffected = 1;
-  string id=2;
+  string id = 2;
 }

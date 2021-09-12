@@ -18,9 +18,9 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type TransactionClient interface {
-	BeginTx(ctx context.Context, in *CommonTxRequest, opts ...grpc.CallOption) (*BeginTxResponse, error)
-	Commit(ctx context.Context, in *CommonTxRequest, opts ...grpc.CallOption) (*CommonTxResponse, error)
-	Rollback(ctx context.Context, in *CommonTxRequest, opts ...grpc.CallOption) (*CommonTxResponse, error)
+	BeginTx(ctx context.Context, in *BeginTxRequest, opts ...grpc.CallOption) (*BeginTxResponse, error)
+	Commit(ctx context.Context, in *CommonTxDoActionRequest, opts ...grpc.CallOption) (*CommonTxResponse, error)
+	Rollback(ctx context.Context, in *CommonTxDoActionRequest, opts ...grpc.CallOption) (*CommonTxResponse, error)
 }
 
 type transactionClient struct {
@@ -31,7 +31,7 @@ func NewTransactionClient(cc grpc.ClientConnInterface) TransactionClient {
 	return &transactionClient{cc}
 }
 
-func (c *transactionClient) BeginTx(ctx context.Context, in *CommonTxRequest, opts ...grpc.CallOption) (*BeginTxResponse, error) {
+func (c *transactionClient) BeginTx(ctx context.Context, in *BeginTxRequest, opts ...grpc.CallOption) (*BeginTxResponse, error) {
 	out := new(BeginTxResponse)
 	err := c.cc.Invoke(ctx, "/transaction.Transaction/BeginTx", in, out, opts...)
 	if err != nil {
@@ -40,7 +40,7 @@ func (c *transactionClient) BeginTx(ctx context.Context, in *CommonTxRequest, op
 	return out, nil
 }
 
-func (c *transactionClient) Commit(ctx context.Context, in *CommonTxRequest, opts ...grpc.CallOption) (*CommonTxResponse, error) {
+func (c *transactionClient) Commit(ctx context.Context, in *CommonTxDoActionRequest, opts ...grpc.CallOption) (*CommonTxResponse, error) {
 	out := new(CommonTxResponse)
 	err := c.cc.Invoke(ctx, "/transaction.Transaction/Commit", in, out, opts...)
 	if err != nil {
@@ -49,7 +49,7 @@ func (c *transactionClient) Commit(ctx context.Context, in *CommonTxRequest, opt
 	return out, nil
 }
 
-func (c *transactionClient) Rollback(ctx context.Context, in *CommonTxRequest, opts ...grpc.CallOption) (*CommonTxResponse, error) {
+func (c *transactionClient) Rollback(ctx context.Context, in *CommonTxDoActionRequest, opts ...grpc.CallOption) (*CommonTxResponse, error) {
 	out := new(CommonTxResponse)
 	err := c.cc.Invoke(ctx, "/transaction.Transaction/Rollback", in, out, opts...)
 	if err != nil {
@@ -62,9 +62,9 @@ func (c *transactionClient) Rollback(ctx context.Context, in *CommonTxRequest, o
 // All implementations must embed UnimplementedTransactionServer
 // for forward compatibility
 type TransactionServer interface {
-	BeginTx(context.Context, *CommonTxRequest) (*BeginTxResponse, error)
-	Commit(context.Context, *CommonTxRequest) (*CommonTxResponse, error)
-	Rollback(context.Context, *CommonTxRequest) (*CommonTxResponse, error)
+	BeginTx(context.Context, *BeginTxRequest) (*BeginTxResponse, error)
+	Commit(context.Context, *CommonTxDoActionRequest) (*CommonTxResponse, error)
+	Rollback(context.Context, *CommonTxDoActionRequest) (*CommonTxResponse, error)
 	mustEmbedUnimplementedTransactionServer()
 }
 
@@ -72,13 +72,13 @@ type TransactionServer interface {
 type UnimplementedTransactionServer struct {
 }
 
-func (UnimplementedTransactionServer) BeginTx(context.Context, *CommonTxRequest) (*BeginTxResponse, error) {
+func (UnimplementedTransactionServer) BeginTx(context.Context, *BeginTxRequest) (*BeginTxResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BeginTx not implemented")
 }
-func (UnimplementedTransactionServer) Commit(context.Context, *CommonTxRequest) (*CommonTxResponse, error) {
+func (UnimplementedTransactionServer) Commit(context.Context, *CommonTxDoActionRequest) (*CommonTxResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Commit not implemented")
 }
-func (UnimplementedTransactionServer) Rollback(context.Context, *CommonTxRequest) (*CommonTxResponse, error) {
+func (UnimplementedTransactionServer) Rollback(context.Context, *CommonTxDoActionRequest) (*CommonTxResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Rollback not implemented")
 }
 func (UnimplementedTransactionServer) mustEmbedUnimplementedTransactionServer() {}
@@ -95,7 +95,7 @@ func RegisterTransactionServer(s grpc.ServiceRegistrar, srv TransactionServer) {
 }
 
 func _Transaction_BeginTx_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CommonTxRequest)
+	in := new(BeginTxRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -107,13 +107,13 @@ func _Transaction_BeginTx_Handler(srv interface{}, ctx context.Context, dec func
 		FullMethod: "/transaction.Transaction/BeginTx",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TransactionServer).BeginTx(ctx, req.(*CommonTxRequest))
+		return srv.(TransactionServer).BeginTx(ctx, req.(*BeginTxRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Transaction_Commit_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CommonTxRequest)
+	in := new(CommonTxDoActionRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -125,13 +125,13 @@ func _Transaction_Commit_Handler(srv interface{}, ctx context.Context, dec func(
 		FullMethod: "/transaction.Transaction/Commit",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TransactionServer).Commit(ctx, req.(*CommonTxRequest))
+		return srv.(TransactionServer).Commit(ctx, req.(*CommonTxDoActionRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Transaction_Rollback_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CommonTxRequest)
+	in := new(CommonTxDoActionRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -143,7 +143,7 @@ func _Transaction_Rollback_Handler(srv interface{}, ctx context.Context, dec fun
 		FullMethod: "/transaction.Transaction/Rollback",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TransactionServer).Rollback(ctx, req.(*CommonTxRequest))
+		return srv.(TransactionServer).Rollback(ctx, req.(*CommonTxDoActionRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
