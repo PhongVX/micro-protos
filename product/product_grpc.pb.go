@@ -43,7 +43,6 @@ func (c *productClient) UpdateProduct(ctx context.Context, in *UpdateProductRequ
 // for forward compatibility
 type ProductServer interface {
 	UpdateProduct(context.Context, *UpdateProductRequest) (*UpdateProductResponse, error)
-	mustEmbedUnimplementedProductServer()
 }
 
 // UnimplementedProductServer must be embedded to have forward compatible implementations.

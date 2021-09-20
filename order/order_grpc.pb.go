@@ -54,7 +54,6 @@ func (c *orderClient) InsertOrderDetail(ctx context.Context, in *InsertOrderDeta
 type OrderServer interface {
 	InsertOrder(context.Context, *InsertOrderRequest) (*InsertOrderResponse, error)
 	InsertOrderDetail(context.Context, *InsertOrderDetailRequest) (*InsertOrderDetailResponse, error)
-	mustEmbedUnimplementedOrderServer()
 }
 
 // UnimplementedOrderServer must be embedded to have forward compatible implementations.

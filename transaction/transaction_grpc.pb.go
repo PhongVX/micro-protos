@@ -169,5 +169,5 @@ var Transaction_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "transaction.proto",
+	Metadata: "transaction/transaction.proto",
 }
