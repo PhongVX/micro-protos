@@ -12,6 +12,7 @@ message UpdateProductRequest {
   string correlationID = 1;
   int32 ID=2;
   int32 quantity=3;
+  string txRandomID = 4;
 }
 
 message UpdateProductResponse {

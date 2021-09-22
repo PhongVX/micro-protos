@@ -23,11 +23,13 @@ message InsertOrderRequest {
   double totalPrice = 3;
   string name = 4;
   string address = 5;
+  string txRandomID = 6;
 }
 
 message InsertOrderDetailRequest {
   string correlationID = 1;
-  repeated OrderDetail orderDetails = 6;
+  string txRandomID = 2;
+  repeated OrderDetail orderDetails = 3;
 }
 
 message InsertOrderResponse {

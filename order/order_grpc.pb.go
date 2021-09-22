@@ -132,5 +132,5 @@ var Order_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "order.proto",
+	Metadata: "order/order.proto",
 }
