@@ -16,11 +16,13 @@ message BeginTxResponse {
 
 message BeginTxRequest {
   string correlationID = 1;
+  string uuid =2;
 }
 
 message CommonTxDoActionRequest {
   string correlationID = 1;
   BeginTxResponse beginTxRes = 2;
+  string uuid =3;
 }
 
 message CommonTxResponse {

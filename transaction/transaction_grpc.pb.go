@@ -65,6 +65,7 @@ type TransactionServer interface {
 	BeginTx(context.Context, *BeginTxRequest) (*BeginTxResponse, error)
 	Commit(context.Context, *CommonTxDoActionRequest) (*CommonTxResponse, error)
 	Rollback(context.Context, *CommonTxDoActionRequest) (*CommonTxResponse, error)
+	mustEmbedUnimplementedTransactionServer()
 }
 
 // UnimplementedTransactionServer must be embedded to have forward compatible implementations.
