@@ -12,17 +12,17 @@ service Transaction {
 
 message BeginTxResponse {
   bool isRenew = 1;
+  string txRandomID = 2;
 }
 
 message BeginTxRequest {
   string correlationID = 1;
-  string uuid =2;
 }
 
 message CommonTxDoActionRequest {
   string correlationID = 1;
   BeginTxResponse beginTxRes = 2;
-  string uuid =3;
+  string txRandomID =3;
 }
 
 message CommonTxResponse {
