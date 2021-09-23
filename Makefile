@@ -1,6 +1,6 @@
 order:
-	protoc --proto_path=. --go_out=. --go-grpc_out=.  ./order/order.proto
+	protoc --go_out=paths=source_relative:.  --go-grpc_out=paths=source_relative:. ./order/order.proto
 transaction:
-	protoc --proto_path=. --go_out=. --go-grpc_out=.  ./transaction/transaction.proto
+	protoc --go_out=paths=source_relative:.  --go-grpc_out=paths=source_relative:. ./transaction/transaction.proto
 product:
-	protoc --proto_path=. --go_out=. --go-grpc_out=.  ./product/product.proto
+	protoc --go_out=paths=source_relative:.  --go-grpc_out=paths=source_relative:. ./product/product.proto

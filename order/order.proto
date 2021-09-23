@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package order;
 
-option go_package="github.com/PhongVX/micro-protos/order";
+option go_package="github.com/PhongVX/micro-protos/order;order";
 
 import "transaction/transaction.proto";
 
