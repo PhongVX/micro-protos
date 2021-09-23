@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package transaction;
 
-option go_package="./transaction";
+option go_package="github.com/PhongVX/micro-protos/transaction";
 
 service Transaction {
   rpc BeginTx(BeginTxRequest) returns (BeginTxResponse) {}
@@ -22,7 +22,6 @@ message BeginTxRequest {
 message CommonTxDoActionRequest {
   string correlationID = 1;
   BeginTxResponse beginTxRes = 2;
-  string txRandomID =3;
 }
 
 message CommonTxResponse {
